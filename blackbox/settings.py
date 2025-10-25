@@ -81,7 +81,7 @@ DATABASES = {
         'USER': 'postgres.dwxanewxsprxplxmryls',                     # from your cloud provider
         'PASSWORD': 'Blackbox9456270912',             # from your cloud provider
         'HOST': 'aws-1-us-east-2.pooler.supabase.com',                     # from your cloud provider
-        'PORT': '5432',                             # usually 5432
+        'PORT': '6543',                             # usually 5432
     }
 }
 
