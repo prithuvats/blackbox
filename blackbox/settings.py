@@ -76,14 +76,18 @@ WSGI_APPLICATION = 'blackbox.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # <-- change engine
-        'NAME': 'postgres',                     # from your cloud provider
-        'USER': 'postgres.dwxanewxsprxplxmryls',                     # from your cloud provider
-        'PASSWORD': 'Blackbox9456270912',             # from your cloud provider
-        'HOST': 'aws-1-us-east-2.pooler.supabase.com',                     # from your cloud provider
-        'PORT': '6543',                             # usually 5432
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.dwxanewxsprxplxmryls',
+        'PASSWORD': 'Blackx9456270912@',
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',
+        'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c pooler=session'
+        }
     }
 }
+
 
 
 # Password validation
