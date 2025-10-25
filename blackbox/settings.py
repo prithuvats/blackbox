@@ -72,14 +72,15 @@ WSGI_APPLICATION = 'blackbox.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+#using postgresql on supbase through teh session mood connection because direct connect doesnt allowed ipv4 and render use ipv4 as teh free version
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # <-- change engine
         'NAME': 'postgres',                     # from your cloud provider
-        'USER': 'postgres',                     # from your cloud provider
+        'USER': 'postgres.dwxanewxsprxplxmryls',                     # from your cloud provider
         'PASSWORD': 'Blackbox9456270912',             # from your cloud provider
-        'HOST': 'db.dwxanewxsprxplxmryls.supabase.co',                     # from your cloud provider
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',                     # from your cloud provider
         'PORT': '5432',                             # usually 5432
     }
 }
