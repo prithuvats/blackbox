@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>About — BlackBox</title>
+<style>
+  :root{
+    --bg:#061014;
+    --panel:#0f1720;
+    --muted:#9aa6b2;
+    --accent-1:#ff5edf;
+    --accent-2:#8000ff;
+    --accent-3:#ff0080;
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    --radius:14px;
+    --shadow: 0 10px 30px rgba(2,6,23,0.6);
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:var(--font-sans);color:#eaf6ff;background:var(--bg);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  body{
+    background-image:
+      radial-gradient(circle at 15% 12%, rgba(255,0,150,0.06) 0%, rgba(255,0,150,0.02) 12%, transparent 30%),
+      radial-gradient(circle at 85% 78%, rgba(120,90,255,0.04) 0%, rgba(120,90,255,0.02) 10%, transparent 28%),
+      linear-gradient(180deg,#071019 0%, #071018 60%, #050607 100%);
+    background-blend-mode: screen, screen, normal;
+    background-attachment: fixed;
+  }
+
+  /* subtle floating blobs */
+  body::before, body::after{
+    content:""; position:fixed; pointer-events:none; mix-blend-mode: screen; filter: blur(80px) saturate(120%); z-index:0;
+  }
+  body::before{background: radial-gradient(closest-side, rgba(200,0,255,0.14), rgba(150,0,255,0.06) 30%, transparent 70%); left:18%; top:22%; width:760px; height:460px; animation: floatA 20s ease-in-out infinite;}
+  body::after{background: radial-gradient(closest-side, rgba(255,0,150,0.12), rgba(150,50,255,0.06) 28%, transparent 72%); left:78%; top:72%; width:620px; height:380px; animation: floatB 24s ease-in-out infinite;}
+  @keyframes floatA{0%{transform:translateY(-20px)}50%{transform:translateY(30px)}100%{transform:translateY(-20px)}}
+  @keyframes floatB{0%{transform:translateY(30px)}50%{transform:translateY(-28px)}100%{transform:translateY(30px)}}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:28px;position:relative;z-index:1}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:grid;place-items:center;font-weight:700;box-shadow:var(--shadow)}
+  h1{margin:0;font-size:22px;color:#fff}
+  .subtitle{color:var(--muted);font-size:13px}
+
+  nav{display:flex;gap:10px}
+  .nav-btn{
+    padding:8px 14px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;color:#fff;
+    background: linear-gradient(135deg,var(--accent-1),var(--accent-2),var(--accent-3)); box-shadow:0 8px 22px rgba(150,20,160,0.12)
+  }
+
+  main{display:grid;grid-template-columns: 1fr 420px; gap:24px; align-items:start;}
+  @media (max-width:980px){ main{grid-template-columns: 1fr; } }
+
+  /* content panel */
+  .panel{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:20px; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.03)}
+  .lead{font-size:18px;color:#dceffd;margin-bottom:12px}
+  h2{margin:0 0 12px 0; font-size:18px; color:#ff6ec7}
+  p{color:var(--muted);line-height:1.6;margin:0 0 12px 0}
+
+  /* features list */
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  @media (max-width:600px){ .features{grid-template-columns:1fr} }
+  .feature{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center}
+  .feature svg{width:44px;height:44px;flex-shrink:0}
+  .feature b{display:block;color:#fff}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:10px;padding:12px;cursor:pointer;border:1px solid rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center}
+  .card svg{width:68px;height:68px;flex-shrink:0}
+  .card .meta{color:var(--muted)}
+  .card b{color:#fff;display:block;margin-bottom:6px}
+
+  /* right column */
+  .right .panel{position:sticky;top:28px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+  input[type="url"]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff}
+  .cta{display:flex;gap:10px;margin-top:12px}
+  .btn{
+    padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer;background: linear-gradient(135deg,var(--accent-1),var(--accent-2),var(--accent-3)); color:#fff;
+    box-shadow:0 8px 20px rgba(150,20,160,0.12)
+  }
+  .small{font-size:13px;color:var(--muted);margin-top:10px}
+
+  /* fake results */
+  .results{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+  .result{padding:10px;border-radius:8px;background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center}
+  .badge-high{background:#ff7b72;color:#140a08;padding:6px 8px;border-radius:8px;font-weight:800}
+  .badge-low{background:rgba(255,255,255,0.03);color:var(--muted);padding:6px 8px;border-radius:8px}
+
+  /* modal */
+  .modal-back{position:fixed;inset:0;background:rgba(3,6,10,0.6);display:none;align-items:center;justify-content:center;z-index:9999;padding:28px}
+  .modal{max-width:720px;width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px}
+  .modal h3{margin-top:0;color:#ff6ec7}
+  .modal .close{float:right;background:transparent;border:0;color:var(--muted);font-weight:700;cursor:pointer}
+
+  footer{margin-top:32px;color:var(--muted);font-size:13px}
+  footer a{color:#ff5edf;text-decoration:none}
+</style>
+</head>
+<body>
+  <div class="wrap" role="document">
+    <header>
+      <div class="brand">
+        <div class="logo">BB</div>
+        <div>
+          <h1>BlackBox</h1>
+          <div class="subtitle">Passive Site Scanner — safe & educational</div>
+        </div>
+      </div>
+
+      <nav>
+        <a class="nav-btn" href="/">Home</a>
+        <a class="nav-btn" href="/scan/">Scanner</a>
+        <a class="nav-btn" href="/login/">Login</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- LEFT: about content -->
+      <section class="panel" aria-labelledby="aboutTitle">
+        <h2 id="aboutTitle">About the project</h2>
+        <div class="lead">BlackBox is a lightweight, front-end safe tool that helps developers and site owners quickly inspect public-facing website metadata and common security headers.</div>
+
+        <p>
+          The idea: a user provides a website URL → BlackBox performs passive, non-intrusive checks (for example: security headers, TLS certificate presence, robots.txt, and basic server info) and returns human-friendly results. This is for education and quick triage — never run active or intrusive scans without explicit permission.
+        </p>
+
+        <h3 style="color:#dbeafb;margin-top:12px">How it works</h3>
+        <ol style="color:var(--muted);padding-left:18px;line-height:1.7">
+          <li>User submits a URL (front-end demo or server-backed).</li>
+          <li>Server (or front-end demo) gathers publicly available headers, TLS info, and metadata.</li>
+          <li>Results are categorized by severity and shown in the UI with guidance to fix simple issues.</li>
+        </ol>
+
+        <h3 style="color:#dbeafb;margin-top:12px">Core features</h3>
+        <div class="features" role="list">
+          <div class="feature" role="listitem">
+            <!-- shield svg -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 3v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-3z" stroke="#ffb6e6" stroke-width="1.2" fill="rgba(255,255,255,0.02)"/></svg>
+            <div><b>Passive checks</b><span class="meta">Non-intrusive — safe by default</span></div>
+          </div>
+
+          <div class="feature" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#bdbcff" stroke-width="1.2" fill="rgba(255,255,255,0.02)"/></svg>
+            <div><b>TLS & headers</b><span class="meta">Certificate, HSTS, CSP, server info</span></div>
+          </div>
+
+          <div class="feature" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M10 14l2-2 2 2 4-4" stroke="#ffc6f5" stroke-width="1.2" fill="rgba(255,255,255,0.02)"/></svg>
+            <div><b>User-friendly</b><span class="meta">Clear results + remediation tips</span></div>
+          </div>
+
+          <div class="feature" role="listitem">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#b6ffc8" stroke-width="1.2" /></svg>
+            <div><b>Education-first</b><span class="meta">Great for learning web security basics</span></div>
+          </div>
+        </div>
+
+        <h3 style="color:#dbeafb;margin-top:16px">Project gallery</h3>
+        <div class="gallery" id="gallery" aria-label="Illustrations">
+          <!-- Card 1 -->
+          <div class="card" data-title="Site inspection" data-desc="Passive inspection of headers, metadata and robots.txt" tabindex="0">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="10" width="52" height="36" rx="4" fill="#0b1220"/>
+              <path d="M14 20h36" stroke="#ff5edf" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="48" cy="34" r="6" fill="#8000ff" opacity="0.9"/>
+            </svg>
+            <div>
+              <b>Site Inspection</b>
+              <div class="meta">Headers • robots.txt • metadata</div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="card" data-title="TLS checks" data-desc="TLS certificate validation, chain and expiry details" tabindex="0">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="18" width="44" height="28" rx="6" fill="#081216"/>
+              <path d="M22 30c1-4 10-6 14-2" stroke="#ff0080" stroke-width="2" stroke-linecap="round"/>
+              <path d="M36 38h4v6h-4z" fill="#ff5edf"/>
+            </svg>
+            <div>
+              <b>TLS & Cert</b>
+              <div class="meta">Certificate validity and trust</div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="card" data-title="Robots analysis" data-desc="Detect disallowed paths exposed via robots.txt" tabindex="0">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="8" width="48" height="48" rx="8" fill="#07111a"/>
+              <path d="M18 26h28M18 34h20" stroke="#d6b3ff" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="46" cy="18" r="4" fill="#ff5edf"/>
+            </svg>
+            <div>
+              <b>Robots.txt</b>
+              <div class="meta">Find exposed directories & hints</div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="card" data-title="Server info" data-desc="Check server headers and identify software versions" tabindex="0">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="12" width="52" height="40" rx="4" fill="#051018"/>
+              <rect x="12" y="18" width="18" height="8" rx="2" fill="#ff5edf"/>
+              <rect x="12" y="30" width="28" height="8" rx="2" fill="#8000ff"/>
+            </svg>
+            <div>
+              <b>Server Info</b>
+              <div class="meta">Server header, redirects</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: interactive scan & contact -->
+      <aside class="right">
+        <div class="panel">
+          <h2>Try a safe demo scan</h2>
+          <label for="demoUrl">Website URL</label>
+          <input id="demoUrl" type="url" placeholder="https://example.com" aria-label="Website URL"/>
+          <div class="cta">
+            <button id="runDemo" class="btn">Run Demo Scan</button>
+            <button id="explainBtn" class="btn" style="background:linear-gradient(135deg,#6ee7b7,#06b6d4)">How it works</button>
+          </div>
+          <div class="small">This demo runs front-end simulated checks only. For real checks, connect to a back-end scanner with permission.</div>
+
+          <div class="results" id="results" aria-live="polite"></div>
+        </div>
+
+        <div style="height:12px"></div>
+
+        <div class="panel">
+          <h2>Contact & support</h2>
+          <p style="color:var(--muted)">Questions, bug reports or if you want to integrate a real scanner backend, contact the developer.</p>
+          <p style="margin-top:6px"><b>Email</b> — <a href="mailto:support@blackbox.example">support@blackbox.example</a></p>
+          <p style="margin-top:6px"><b>Docs</b> — <a href="/docs/">Integration docs</a></p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;margin-top:20px">
+        <div style="max-width:520px">
+          <h3 style="color:#ff6ec7;margin:0 0 8px 0">About BlackBox</h3>
+          <p style="color:var(--muted)">BlackBox provides quick, passive insights into public website metadata and basic security headers. It is intended for learning and triage — not for offensive testing. Always get permission before running in-depth scans.</p>
+        </div>
+
+        <div style="min-width:220px">
+          <h3 style="color:#ff6ec7;margin:0 0 8px 0">Quick links</h3>
+          <p style="color:var(--muted)"><a href="/scan/">Scanner</a> • <a href="/about/">About</a> • <a href="/login/">Login</a> • <a href="/signup/">Signup</a></p>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;color:var(--muted)">© 2025 BlackBox. Built for education. Never scan without permission.</div>
+    </footer>
+  </div>
+
+  <!-- modal -->
+  <div id="modalBack" class="modal-back" role="dialog" aria-modal="true">
+    <div class="modal" role="document">
+      <button class="close" id="modalClose" aria-label="Close">✕</button>
+      <h3 id="modalTitle">Title</h3>
+      <p id="modalDesc" style="color:var(--muted)"></p>
+    </div>
+  </div>
+
+<script>
+  // Gallery: open modal with card info
+  document.querySelectorAll('.card').forEach(card => {
+    const open = () => {
+      const title = card.getAttribute('data-title');
+      const desc = card.getAttribute('data-desc');
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      document.getElementById('modalBack').style.display = 'flex';
+    };
+    card.addEventListener('click', open);
+    card.addEventListener('keypress', (e) => { if(e.key === 'Enter') open(); });
+  });
+  document.getElementById('modalClose').addEventListener('click', () => {
+    document.getElementById('modalBack').style.display = 'none';
+  });
+  document.getElementById('modalBack').addEventListener('click', (e) => {
+    if(e.target === document.getElementById('modalBack')){
+      document.getElementById('modalBack').style.display = 'none';
+    }
+  });
+
+  // Demo scan simulation (safe, front-end only)
+  const runDemo = document.getElementById('runDemo');
+  const resultsBox = document.getElementById('results');
+  runDemo.addEventListener('click', () => {
+    const url = document.getElementById('demoUrl').value.trim();
+    if(!url){
+      alert('Please enter a URL to demo-scan (front-end demo).');
+      return;
+    }
+    runFakeScan(url);
+  });
+
+  function runFakeScan(url){
+    resultsBox.innerHTML = '';
+    addStatus('Running passive checks for: ' + url);
+    // fake checks and timings
+    const checks = [
+      {id:'H-01', title:'Content-Security-Policy', ok:false, fix:'Add strict CSP header.'},
+      {id:'H-02', title:'Strict-Transport-Security (HSTS)', ok:true, fix:''},
+      {id:'T-01', title:'TLS Certificate', ok:true, fix:''},
+      {id:'R-01', title:'robots.txt exposure', ok:false, fix:'Review disallowed paths.'},
+      {id:'S-01', title:'Server header info leak', ok:false, fix:'Hide server version info.'}
+    ];
+    // simulate progressive results
+    let idx = 0;
+    const interval = setInterval(() => {
+      if(idx >= checks.length){ clearInterval(interval); addStatus('Scan complete.'); return; }
+      const c = checks[idx++];
+      const el = document.createElement('div');
+      el.className = 'result';
+      const left = document.createElement('div');
+      left.innerHTML = `<div style="font-weight:700">${c.title}</div><div style="color:var(--muted);font-size:13px">${c.ok ? 'Present' : 'Missing / Needs review'}</div>`;
+      const right = document.createElement('div');
+      right.innerHTML = c.ok ? `<span class="badge-low">OK</span>` : `<span class="badge-high">FIX</span>`;
+      el.appendChild(left);
+      el.appendChild(right);
+      resultsBox.appendChild(el);
+    }, 700);
+  }
+
+  function addStatus(text){
+    const el = document.createElement('div');
+    el.className = 'result';
+    el.innerHTML = `<div style="color:var(--muted)">${text}</div>`;
+    resultsBox.appendChild(el);
+  }
+
+  // explain button toggles a quick guide modal
+  document.getElementById('explainBtn').addEventListener('click', () => {
+    document.getElementById('modalTitle').textContent = 'How BlackBox works (brief)';
+    document.getElementById('modalDesc').textContent = 'BlackBox collects publicly available metadata — headers, TLS info, robots.txt — and reports findings. For deeper active tests integrate a backend scanner and always obtain permission.';
+    document.getElementById('modalBack').style.display = 'flex';
+  });
+
+  // accessibility: escape to close modal
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') document.getElementById('modalBack').style.display = 'none';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The BlackBox | Dashboard</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0a0f0d, #0f3326);
+    color: #e0e0e0;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    height: 100%;
+    width: 220px;
+    background-color: rgba(15,25,20,0.95);
+    box-shadow: 2px 0 15px rgba(0,255,100,0.3);
+    padding-top: 30px;
+  }
+
+  .sidebar h2 {
+    color: #00ff88;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .sidebar a {
+    display: block;
+    color: #00ff88;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .sidebar a:hover {
+    background-color: #00ff88;
+    color: #0a0f0d;
+    border-radius: 8px;
+  }
+
+  /* Main content */
+  .main {
+    margin-left: 240px;
+    padding: 40px;
+  }
+
+  h1 {
+    color: #00ff88;
+  }
+
+  .user-info {
+    background: rgba(28,43,37,0.9);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0,255,100,0.3);
+  }
+
+  .user-info p {
+    margin: 8px 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .actions form button, .actions a.button {
+    padding: 12px;
+    background: #00ff88;
+    color: #0a0f0d;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s;
+  }
+
+  .actions form button:hover, .actions a.button:hover {
+    background: #00cc66;
+    box-shadow: 0 0 8px #00ff88;
+  }
+
+  /* Responsive */
+  @media(max-width:768px){
+    .sidebar {width:100%;height:auto;position:relative;}
+    .main {margin-left:0;padding:20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>The BlackBox</h2>
+  <a href="/">Home</a>
+  <a href="/about/">About</a>
+  <a href="/scan/">Scan</a>
+  <a href="/logout/" class="button">Logout</a>
+  <a href="/delete/" class="button">Delete Account</a>
+  <a href="/changepassword/" class="button">Change Password</a>
+</div>
+
+<div class="main">
+  <h1>Welcome, {{ username }}</h1>
+
+  <div class="user-info">
+    <p><strong>Name:</strong> {{ fullname }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+  </div>
+
+  <div class="scan-section" style="margin-top:40px;">
+    <h2>Scan a Website</h2>
+    <form action="/scan/" method="POST">
+      <input type="url" name="url" placeholder="Enter website URL" required style="width:70%; padding:12px; border-radius:8px; border:none; background:#1c2b25; color:#e0e0e0;">
+      <button type="submit" style="padding:12px; margin-left:10px;">Start Scan</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

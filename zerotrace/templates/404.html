@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Page Not Found</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  :root{
+    --bg:#05060a;
+    --accent1:#ff5edf;
+    --accent2:#8000ff;
+    --accent3:#ff0080;
+    --text:#ffffff;
+    --muted:#9aa6b2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family: 'Roboto', sans-serif;}
+  body, html{height:100%;background:linear-gradient(135deg,#05060a,#0c0d13);}
+  body{display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--text);overflow:hidden;}
+  
+  h1{font-size:80px;background:linear-gradient(135deg,var(--accent1),var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;}
+  h2{color:var(--muted);margin-bottom:40px;}
+
+  /* Button to home */
+  .btn-home{
+    padding:12px 24px;
+    background:linear-gradient(135deg,var(--accent1),var(--accent3));
+    border:none;
+    border-radius:12px;
+    font-weight:700;
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(255,0,150,0.2);
+    margin-bottom:50px;
+    transition: transform 0.2s ease;
+  }
+  .btn-home:hover{transform:scale(1.05);}
+
+  /* Game canvas */
+  #gameCanvas{background:#0b0f12;border:2px solid var(--accent2);border-radius:12px;}
+
+  /* Instructions */
+  .instructions{margin-top:14px;color:var(--muted);font-size:14px;text-align:center;}
+</style>
+</head>
+<body>
+  <h1>404</h1>
+  <h2>Oops! Page Not Found</h2>
+  <button class="btn-home" onclick="location.href='/'">Go Home</button>
+
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <div class="instructions">Use <b>Arrow Left</b> and <b>Arrow Right</b> to move and avoid falling blocks!</div>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const width = canvas.width;
+  const height = canvas.height;
+
+  let player = {x: width/2-15, y: height-30, w:30, h:30, color:'#ff5edf'};
+  let obstacles = [];
+  let keys = {};
+  let score = 0;
+  let gameOver = false;
+
+  document.addEventListener('keydown', e => keys[e.key] = true);
+  document.addEventListener('keyup', e => keys[e.key] = false);
+
+  function spawnObstacle(){
+    let size = 20 + Math.random()*20;
+    obstacles.push({
+      x: Math.random()*(width-size),
+      y: -size,
+      w: size,
+      h: size,
+      color: `hsl(${Math.random()*360},80%,60%)`,
+      speed: 2 + Math.random()*2
+    });
+  }
+
+  function update(){
+    if(gameOver) return;
+
+    // move player
+    if(keys['ArrowLeft']) player.x -=5;
+    if(keys['ArrowRight']) player.x +=5;
+    if(player.x<0) player.x=0;
+    if(player.x+player.w>width) player.x=width-player.w;
+
+    // move obstacles
+    obstacles.forEach(o => { o.y += o.speed; });
+    // remove off-screen
+    obstacles = obstacles.filter(o => o.y < height+o.h);
+
+    // collision detection
+    obstacles.forEach(o => {
+      if(player.x < o.x + o.w && player.x + player.w > o.x &&
+         player.y < o.y + o.h && player.y + player.h > o.y){
+        gameOver = true;
+        alert('Game Over! Score: '+score);
+        location.reload();
+      }
+    });
+
+    // increment score
+    score++;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,width,height);
+
+    // draw player
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x,player.y,player.w,player.h);
+
+    // draw obstacles
+    obstacles.forEach(o => {
+      ctx.fillStyle = o.color;
+      ctx.fillRect(o.x,o.y,o.w,o.h);
+    });
+
+    // draw score
+    ctx.fillStyle = '#fff';
+    ctx.font = '16px Roboto';
+    ctx.fillText('Score: '+score,10,20);
+  }
+
+  function gameLoop(){
+    if(!gameOver){
+      if(Math.random() < 0.03) spawnObstacle();
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+  }
+
+  gameLoop();
+</script>
+</body>
+</html>
