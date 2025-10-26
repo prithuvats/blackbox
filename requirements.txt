@@ -12,3 +12,5 @@ typing_extensions==4.15.0
 tzdata==2025.2
 urllib3==2.5.0
 gunicorn
+psycopg2-binary
+dj-database-url
