@@ -82,9 +82,6 @@ DATABASES = {
         'PASSWORD': 'Blackx9456270912@',
         'HOST': 'aws-1-us-east-2.pooler.supabase.com',
         'PORT': '5432',
-        'OPTIONS': {
-            'options': '-c pooler=session'
-        }
     }
 }
 
