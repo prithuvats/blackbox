@@ -80,10 +80,12 @@ WSGI_APPLICATION = 'blackbox.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('postgresql://postgres.dwxanewxsprxplxmryls:[Blackx9456270912@]@aws-1-us-east-2.pooler.supabase.com:5432/postgres'),
-        conn_max_age=600
+        default='postgresql://postgres.dwxanewxsprxplxmryls:Blackx9456270912%40@aws-1-us-east-2.pooler.supabase.com:5432/postgres',
+        conn_max_age=600,
+        ssl_require=True
     )
 }
+
 
 
 
