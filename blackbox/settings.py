@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,18 +76,13 @@ WSGI_APPLICATION = 'blackbox.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 #using postgresql on supbase through teh session mood connection because direct connect doesnt allowed ipv4 and render use ipv4 as teh free version
 
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.dwxanewxsprxplxmryls',
-        'PASSWORD': 'Blackx9456270912@',
-        'HOST': 'aws-1-us-east-2.pooler.supabase.com',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require'  # enable SSL for Supabase connection
-        },
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('postgresql://postgres.dwxanewxsprxplxmryls:[Blackx9456270912@]@aws-1-us-east-2.pooler.supabase.com:5432/postgres'),
+        conn_max_age=600
+    )
 }
 
 
