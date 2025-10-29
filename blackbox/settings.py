@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-import os
+
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-uu32in0*#e1))*pgpi)9np-2j_tqk!edu)%tto=+t99$gbqso#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [*]
 
 
 # Application definition
@@ -74,21 +74,24 @@ WSGI_APPLICATION = 'blackbox.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-#using postgresql on supbase through teh session mood connection because direct connect doesnt allowed ipv4 and render use ipv4 as teh free version
 
-
+'''DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # <-- change engine
+        'NAME': 'postgres',                     # from your cloud provider
+        'USER': 'postgres.tgwxqwvdayisgytfbqjp',                     # from your cloud provider
+        'PASSWORD': 'Blackbox9456270912@',             # from your cloud provider
+        'HOST': 'aws-1-ap-southeast-1.pooler.supabase.com',                     # from your cloud provider
+        'PORT': '5432',                             # usually 5432
+    }
+}'''
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres.dwxanewxsprxplxmryls:Blackx9456270912%40@aws-1-us-east-2.pooler.supabase.com:5432/postgres',
-        conn_max_age=600,
-        ssl_require=True
+        default='postgresql://postgres.tgwxqwvdayisgytfbqjp:Blackbox9456270912@@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres',
+        conn_max_age=600
     )
 }
-
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
